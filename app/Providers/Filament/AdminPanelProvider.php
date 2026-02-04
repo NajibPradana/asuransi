@@ -54,6 +54,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->id('admin')
             ->path('admin')
+            ->authGuard('admin')
             ->login(Login::class)
             ->passwordReset(RequestPasswordReset::class)
             ->emailVerification(EmailVerification::class)

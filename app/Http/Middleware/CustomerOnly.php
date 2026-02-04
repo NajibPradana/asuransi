@@ -24,8 +24,8 @@ class CustomerOnly
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user->hasRole('customer')) {
-            abort(403, 'Access denied. This page is only available for customers.');
+        if (!$user->hasRole('user')) {
+            abort(403, 'Access denied. This page is only available for users.');
         }
 
         // Check if email is verified

@@ -29,6 +29,11 @@ class RoleResource extends Resource implements HasShieldPermissions
      * @var array<string,string>
      */
     protected static array $roleLabels = [
+        // Basic Roles
+        'user' => 'User',
+        'manager' => 'Manager',
+        'admin' => 'Admin',
+
         // Operator
         'kasir_unit' => 'Kasir Unit',
         'customer_services' => 'Customer Services',

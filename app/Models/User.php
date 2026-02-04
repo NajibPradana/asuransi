@@ -140,7 +140,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName, 
     public function getIsAdminAttribute()
     {
         return $this->isSuperAdmin()
-            || $this->hasRole('admin');
+            || $this->hasRole('admin')
+            || $this->hasRole('manager');
     }
 
     public function registerMediaCollections(): void
