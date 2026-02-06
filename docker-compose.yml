@@ -4,27 +4,27 @@ services:
     build:
       context: .
       dockerfile: ./builder/local/Dockerfile
-    container_name: app-filament
+    container_name: asuransi-app
     volumes:
       - .:/var/www/html
     networks:
-      - app-bridge
+      - asuransi-network
 
   app-prod:
     profiles: ["prod"]
     build:
       context: .
       dockerfile: ./builder/prod/Dockerfile
-    container_name: app-filament-prod
+    container_name: asuransi-app-prod
     restart: always
     volumes:
       - .:/var/www/html
     networks:
-      - app-bridge
+      - asuransi-network
 
   webserver:
     image: nginx:stable-alpine
-    container_name: nginx-filament
+    container_name: nginx-asuransi
     profiles: ["dev"]
     ports:
       - "8080:8080"
@@ -35,11 +35,11 @@ services:
     depends_on:
       - app
     networks:
-      - app-bridge
+      - asuransi-network
 
   webserver-prod:
     image: nginx:stable-alpine
-    container_name: nginx-filament-prod
+    container_name: nginx-asuransi-prod
     restart: always
     profiles: ["prod"]
     ports:
@@ -50,39 +50,37 @@ services:
     depends_on:
       - app-prod
     networks:
-      - app-bridge
+      - asuransi-network
 
   redis:
     image: redis:latest
-    container_name: redis-filament
+    container_name: redis-asuransi
     restart: always
-    ports:
-      - "6379:6379"
     command: redis-server --save 60 1 --loglevel warning
     volumes:
       - ./redis:/data
     networks:
-      - app-bridge
+      - asuransi-network
 
   mailpit:
     image: axllent/mailpit
-    container_name: mailpit-filament
+    container_name: mailpit-asuransi
     profiles: ["dev"]
     ports:
       - "8025:8025"     # Web UI
       - "1025:1025"     # SMTP
     networks:
-      - app-bridge
+      - asuransi-network
 
   adminer:
     image: adminer
-    container_name: adminer-filament
+    container_name: adminer-asuransi
     restart: always
     ports:
       - 8008:8080 # 88 untuk adminer 01 untuk pengenal container
     networks:
-      - app-bridge
+      - asuransi-network
 
 networks:
-  app-bridge:
-    external: true
+  asuransi-network:
+    driver: bridge
