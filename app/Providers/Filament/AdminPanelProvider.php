@@ -141,12 +141,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 Navigation\NavigationItem::make('Log Viewer') // !! To-Do: lang
-                    ->visible(
-                        function (): bool {
-                            /** @var \App\Models\User $user */
-                            $user = Auth::user();
-                            return $user->can('access_log_viewer');
-                        }
+                    ->visible(fn (): bool =>
+                        Auth::check() && Auth::user()->can('access_log_viewer')
                     )
                     ->url(config('app.url') . '/' . config('log-viewer.route_path'), shouldOpenInNewTab: true)
                     ->icon('fluentui-document-bullet-list-multiple-20-o')
